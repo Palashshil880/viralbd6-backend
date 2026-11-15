@@ -46,11 +46,11 @@ if (BOT_TOKEN) {
   bot.command("start", async (ctx) => {
     const keyboard = new InlineKeyboard();
     if (MINI_APP_URL) {
-      keyboard.webApp("Open ViralBD6", MINI_APP_URL);
+      keyboard.webApp("Watch Now", MINI_APP_URL);
     }
 
     await ctx.reply(
-      "Welcome to ViralBD6! Use the button below to open the Mini App.",
+      "Welcome to ViralBD6! Tap Watch Now to open the Mini App.",
       MINI_APP_URL ? { reply_markup: keyboard } : undefined
     );
   });
