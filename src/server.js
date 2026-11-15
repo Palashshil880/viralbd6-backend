@@ -171,9 +171,21 @@ app.use((error, _req, res, _next) => {
   res.status(500).json({ ok: false, error: "Internal server error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`ViralBD6 backend listening on port ${PORT}`);
-  if (!BOT_TOKEN) {
-    console.warn("BOT_TOKEN is not set. API health checks work, but bot/auth features are disabled.");
+async function startServer() {
+  if (bot) {
+    await bot.init();
+    console.log(`Telegram bot initialized: @${bot.botInfo.username}`);
   }
+
+  app.listen(PORT, () => {
+    console.log(`ViralBD6 backend listening on port ${PORT}`);
+    if (!BOT_TOKEN) {
+      console.warn("BOT_TOKEN is not set. API health checks work, but bot/auth features are disabled.");
+    }
+  });
+}
+
+startServer().catch((error) => {
+  console.error("Server startup failed:", error);
+  process.exit(1);
 });
